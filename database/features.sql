@@ -1,0 +1,15 @@
+-- Row count is 2219279 ✅
+
+CREATE TABLE IF NOT EXISTS features(
+
+    ID SERIAL PRIMARY KEY,
+    PRODUCT_ID INT,
+	FEATURE VARCHAR(50),
+	VALUE VARCHAR(75),
+    FOREIGN KEY (PRODUCT_ID) REFERENCES products(ID)
+
+);
+
+COPY features FROM '/tmp/features.csv'
+DELIMITER ','
+CSV HEADER;

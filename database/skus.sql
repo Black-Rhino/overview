@@ -1,0 +1,17 @@
+
+-- Row count is: 11323917 ✅
+
+
+CREATE TABLE IF NOT EXISTS skus(
+
+	ID SERIAL PRIMARY KEY,
+    STYLE_ID INT,
+	SIZE VARCHAR(50),
+	QUANTITY INT,
+    FOREIGN KEY (STYLE_ID) REFERENCES styles(ID)
+    
+);
+
+COPY skus FROM '/tmp/skus.csv'
+DELIMITER ','
+CSV HEADER;
