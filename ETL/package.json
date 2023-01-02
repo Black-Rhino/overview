@@ -2,8 +2,7 @@
     "scripts": {
       "server-dev": "npx nodemon server/index.js"
     },
-    "author": "Beth Johnson",
-    "license": "ISC",
+    "author": "Nika Woodfill",
     "devDependencies": {
       "@babel/core": "^7.12.3",
       "@babel/preset-env": "^7.12.1",
