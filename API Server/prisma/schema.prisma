@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model features {
+  id         Int       @id @default(autoincrement())
+  product_id Int?
+  feature    String?   @db.VarChar(50)
+  value      String?   @db.VarChar(75)
+  products   products? @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model photos {
+  id            Int     @id @default(autoincrement())
+  style_id      Int?
+  url           String?
+  thumbnail_url String?
+  styles        styles? @relation(fields: [style_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model products {
+  id                                                           Int               @id @default(autoincrement())
+  name                                                         String?           @db.VarChar(50)
+  slogan                                                       String?           @db.VarChar(1000)
+  description                                                  String?           @db.VarChar(1000)
+  category                                                     String?           @db.VarChar(50)
+  default_price                                                Float?
+  features                                                     features[]
+  relatedproducts_relatedproducts_current_product_idToproducts relatedproducts[] @relation("relatedproducts_current_product_idToproducts")
+  relatedproducts_relatedproducts_related_product_idToproducts relatedproducts[] @relation("relatedproducts_related_product_idToproducts")
+  styles                                                       styles[]
+}
+
+model relatedproducts {
+  id                                                    Int       @id @default(autoincrement())
+  current_product_id                                    Int?
+  related_product_id                                    Int?
+  products_relatedproducts_current_product_idToproducts products? @relation("relatedproducts_current_product_idToproducts", fields: [current_product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products_relatedproducts_related_product_idToproducts products? @relation("relatedproducts_related_product_idToproducts", fields: [related_product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model skus {
+  id       Int     @id @default(autoincrement())
+  style_id Int?
+  size     String? @db.VarChar(50)
+  quantity Int?
+  styles   styles? @relation(fields: [style_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model styles {
+  id             Int       @id @default(autoincrement())
+  product_id     Int?
+  name           String?   @db.VarChar(50)
+  sale_price     Int?
+  original_price Int?
+  default_style  Boolean?
+  photos         photos[]
+  skus           skus[]
+  products       products? @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
