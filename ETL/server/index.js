@@ -7,7 +7,7 @@ const db = require('../config');
 // pool takes the object above -config- as parameter
 const pool = new pg.Pool(db);
 
-var sql = fs.readFileSync('./database/products.sql').toString();
+var sql = fs.readFileSync('./database/skus.sql').toString();
 //console.log(sql)
 
 pool.connect(function(err, client, done){
