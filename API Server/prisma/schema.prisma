@@ -20,7 +20,7 @@ model photos {
   style_id      Int?
   url           String?
   thumbnail_url String?
-  styles        styles? @relation(fields: [style_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  styles        styles? @relation(fields: [style_id], references: [style_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model products {
@@ -49,11 +49,11 @@ model skus {
   style_id Int?
   size     String? @db.VarChar(50)
   quantity Int?
-  styles   styles? @relation(fields: [style_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  styles   styles? @relation(fields: [style_id], references: [style_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model styles {
-  id             Int       @id @default(autoincrement())
+  style_id       Int       @id @default(autoincrement())
   product_id     Int?
   name           String?   @db.VarChar(50)
   sale_price     Int?
