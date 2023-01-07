@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:3000"
+  http:
+    maxSockets: 5
+  phases:
+    - duration: 30
+      arrivalRate: 50
+      name: Warm up
+    - duration: 30
+      arrivalRate: 250
+      rampTo: 1000
+      name: Ramp up load
+    - duration: 300
+      arrivalRate: 1000
+      name: Sustained load
+
+scenarios:
+  - name: "Retrieve products"
+    flow:
+      - get:
+          url: "/products"
+          qs:
+            page: "{{ $randomNumber(1,100) }}"
+            count: "{{ $randomNumber(1,50)}}"

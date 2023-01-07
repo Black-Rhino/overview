@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["metrics"]
 }
 
 datasource db {
@@ -13,6 +14,8 @@ model features {
   feature    String?   @db.VarChar(50)
   value      String?   @db.VarChar(75)
   products   products? @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index(fields: [product_id])
 }
 
 model photos {
@@ -21,6 +24,8 @@ model photos {
   url           String?
   thumbnail_url String?
   styles        styles? @relation(fields: [style_id], references: [style_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index(fields: [style_id])
 }
 
 model products {
@@ -34,6 +39,8 @@ model products {
   relatedproducts_relatedproducts_current_product_idToproducts relatedproducts[] @relation("relatedproducts_current_product_idToproducts")
   relatedproducts_relatedproducts_related_product_idToproducts relatedproducts[] @relation("relatedproducts_related_product_idToproducts")
   styles                                                       styles[]
+
+  @@index(fields: [id])
 }
 
 model relatedproducts {
@@ -42,6 +49,8 @@ model relatedproducts {
   related_product_id                                    Int?
   products_relatedproducts_current_product_idToproducts products? @relation("relatedproducts_current_product_idToproducts", fields: [current_product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   products_relatedproducts_related_product_idToproducts products? @relation("relatedproducts_related_product_idToproducts", fields: [related_product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index(fields: [related_product_id])
 }
 
 model skus {
@@ -50,6 +59,8 @@ model skus {
   size     String? @db.VarChar(50)
   quantity Int?
   styles   styles? @relation(fields: [style_id], references: [style_id], onDelete: NoAction, onUpdate: NoAction)
+  
+  @@index(fields: [style_id])
 }
 
 model styles {
@@ -62,4 +73,6 @@ model styles {
   photos         photos[]
   skus           skus[]
   products       products? @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index(fields: [product_id])
 }
